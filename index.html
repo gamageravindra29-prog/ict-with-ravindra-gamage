@@ -60,16 +60,35 @@
     <p>LEARN • PRACTICE • ACHIEVE</p>
   </header>
 
-  <main class="container">
-    <div class="card">
-      <h2>Welcome Student!</h2>
-      <p>ඔබගේ ICT ඉගෙනුම් අවකාශයට සාදරයෙන් පිළිගනිමු.</p>
-     <input type="text" id="studentId" placeholder="Enter Student ID">
-<button onclick="studentLogin()">STUDENT LOGIN</button>
-<p id="message"></p>
-      <p>Lessons • Activities • Online Tests • Results</p>
-    </div>
-  </main>
+
+<main class="container">
+
+  <div class="card" id="loginSection">
+    <h2>Welcome Student!</h2>
+    <p>ඔබගේ ICT ඉගෙනුම් අවකාශයට සාදරයෙන් පිළිගනිමු.</p>
+
+    <input type="text" id="studentId" placeholder="Enter Student ID">
+
+    <button onclick="studentLogin()">STUDENT LOGIN</button>
+
+    <p id="message"></p>
+  </div>
+
+  <div class="card" id="dashboardSection" style="display:none;">
+    <h2>STUDENT DASHBOARD</h2>
+    <h3 id="studentName"></h3>
+    <p>Student ID: <span id="displayStudentId"></span></p>
+    <p>Grade: <span id="studentGrade"></span></p>
+    <hr>
+    <h3>MY LEARNING</h3>
+    <p>📚 ICT Lessons</p>
+    <p>📝 Activities</p>
+    <p>📊 Exam Results</p>
+    <p>🏆 Achievements</p>
+  </div>
+
+</main>
+
   <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function() {
