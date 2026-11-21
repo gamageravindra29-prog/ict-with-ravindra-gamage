@@ -103,6 +103,7 @@ if ("serviceWorker" in navigator) {
 }
 </script>
   <script>
+
 async function studentLogin() {
   const studentId = document.getElementById("studentId").value.trim();
   const message = document.getElementById("message");
@@ -124,7 +125,18 @@ async function studentLogin() {
     const result = await response.json();
 
     if (result.success) {
-      message.textContent = "Welcome " + result.student.name + "!";
+      document.getElementById("studentName").textContent =
+        "WELCOME " + result.student.name;
+
+      document.getElementById("displayStudentId").textContent =
+        result.student.studentId;
+
+      document.getElementById("studentGrade").textContent =
+        result.student.grade;
+
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("dashboardSection").style.display = "block";
+
     } else {
       message.textContent = result.message;
     }
@@ -133,6 +145,7 @@ async function studentLogin() {
     message.textContent = "Connection error. Please try again.";
   }
 }
+
 </script>
 </body>
 </html>
