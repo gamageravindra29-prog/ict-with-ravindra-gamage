@@ -1,0 +1,12 @@
+
+{
+  "name": "ICT WITH RAVINDRA GAMAGE",
+  "short_name": "ICT RAVINDRA",
+  "description": "ICT Student Learning App",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#102D59",
+  "theme_color": "#102D59",
+  "orientation": "portrait"
+}
