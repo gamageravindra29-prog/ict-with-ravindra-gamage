@@ -142,6 +142,20 @@ async function studentLogin() {
     if (result.success) {
       document.getElementById("studentName").textContent =
         "WELCOME " + result.student.name;
+      const photo = await fetch(
+  apiUrl + "?action=studentPhoto&studentId=" +
+  encodeURIComponent(studentId)
+);
+
+const photoData = await photo.json();
+
+if (photoData.success && photoData.photo) {
+  document.getElementById("studentPhoto").src =
+    "data:" + photoData.photo.mimeType +
+    ";base64," + photoData.photo.base64;
+
+  document.getElementById("studentPhoto").style.display = "block";
+}
 
       document.getElementById("displayStudentId").textContent =
         result.student.studentId;
