@@ -156,6 +156,7 @@ async function studentLogin() {
   }
 }
 
+
 async function loadExamResults() {
 
   const studentId = document.getElementById("displayStudentId").textContent;
@@ -178,26 +179,62 @@ async function loadExamResults() {
       return;
     }
 
-    if (data.results.length === 0) {
+    if (!data.results || data.results.length === 0) {
       resultBox.textContent = "No exam results available.";
       return;
     }
 
-    resultBox.innerHTML = data.results.map(exam => `
-      <div style="background:#f1f5f9;padding:15px;margin:12px 0;border-radius:12px;">
-        <h3>${exam.examName}</h3>
-        <p>Subject: ${exam.subject}</p>
-        <p>Date: ${exam.examDate}</p>
-        <h2>${exam.marks} / ${exam.maxMarks}</h2>
-        <p>Grade: ${exam.examGrade}</p>
-        <p>Rank: ${exam.rank}</p>
+    const results = data.results;
+
+    const totalExams = results.length;
+
+    const average = results.reduce(
+      (sum, exam) => sum + Number(exam.marks || 0), 0
+    ) / totalExams;
+
+    const best = Math.max(
+      ...results.map(exam => Number(exam.marks || 0))
+    );
+
+    resultBox.innerHTML = `
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0;">
+
+        <div style="background:#dbeafe;padding:12px;border-radius:12px;text-align:center;">
+          <h2>${totalExams}</h2>
+          <small>Total Exams</small>
+        </div>
+
+        <div style="background:#dcfce7;padding:12px;border-radius:12px;text-align:center;">
+          <h2>${average.toFixed(1)}%</h2>
+          <small>Average Marks</small>
+        </div>
+
+        <div style="background:#fef3c7;padding:12px;border-radius:12px;text-align:center;">
+          <h2>${best}</h2>
+          <small>Best Result</small>
+        </div>
+
       </div>
-    `).join("");
+
+      ${results.map(exam => `
+        <div style="background:#f1f5f9;padding:15px;margin:12px 0;border-radius:12px;">
+          <h3>${exam.examName}</h3>
+          <p>Subject: ${exam.subject}</p>
+          <p>Date: ${exam.examDate}</p>
+          <h2>${exam.marks} / ${exam.maxMarks}</h2>
+          <p>Grade: ${exam.examGrade}</p>
+          <p>Rank: ${exam.rank}</p>
+        </div>
+      `).join("")}
+
+    `;
 
   } catch (error) {
     resultBox.textContent = "Unable to load results. Please try again.";
   }
 }
+
 
 </script>
 </body>
