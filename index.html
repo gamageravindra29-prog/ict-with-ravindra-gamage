@@ -83,5 +83,37 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+  <script>
+async function studentLogin() {
+  const studentId = document.getElementById("studentId").value.trim();
+  const message = document.getElementById("message");
+
+  if (!studentId) {
+    message.textContent = "Please enter your Student ID.";
+    return;
+  }
+
+  message.textContent = "Checking Student ID...";
+
+  const apiUrl = "https://script.google.com/macros/s/AKfycbzLjJY3h09NEn04MZhVWxrp1YFiSJ5OAAKjR7lzjcPIE8_zelpQZW-u_5xcl9a8cL73cg/exec";
+
+  try {
+    const response = await fetch(
+      apiUrl + "?action=studentLogin&studentId=" + encodeURIComponent(studentId)
+    );
+
+    const result = await response.json();
+
+    if (result.success) {
+      message.textContent = "Welcome " + result.student.name + "!";
+    } else {
+      message.textContent = result.message;
+    }
+
+  } catch (error) {
+    message.textContent = "Connection error. Please try again.";
+  }
+}
+</script>
 </body>
 </html>
