@@ -166,6 +166,60 @@ if (photoData.success && photoData.photo) {
       document.getElementById("studentGrade").textContent =
         result.student.grade;
 
+// LOAD STUDENT LESSONS
+const lessonsList = document.getElementById("lessonsList");
+lessonsList.textContent = "Loading lessons...";
+
+const lessonsResponse = await fetch(
+  apiUrl + "?action=studentLessons&studentId=" +
+  encodeURIComponent(studentId)
+);
+
+const lessonsData = await lessonsResponse.json();
+
+if (lessonsData.success && lessonsData.lessons.length > 0) {
+
+  lessonsList.innerHTML = "";
+
+  lessonsData.lessons.forEach(function(lesson) {
+
+    const item = document.createElement("div");
+    item.style.padding = "12px";
+    item.style.margin = "10px 0";
+    item.style.border = "1px solid #ddd";
+    item.style.borderRadius = "10px";
+
+    const title = document.createElement("h3");
+    title.textContent = lesson.title;
+    item.appendChild(title);
+
+    const description = document.createElement("p");
+    description.textContent = lesson.description || "";
+    item.appendChild(description);
+
+    if (lesson.pdfLink) {
+      const pdf = document.createElement("a");
+      pdf.href = lesson.pdfLink;
+      pdf.target = "_blank";
+      pdf.textContent = "📄 Open PDF";
+      item.appendChild(pdf);
+    }
+
+    if (lesson.videoLink) {
+      const video = document.createElement("a");
+      video.href = lesson.videoLink;
+      video.target = "_blank";
+      video.textContent = " ▶ Watch Video";
+      item.appendChild(video);
+    }
+
+    lessonsList.appendChild(item);
+  });
+
+} else {
+  lessonsList.textContent = "තවම පාඩම් එකතු කර නැත.";
+}
+
       document.getElementById("loginSection").style.display = "none";
       document.getElementById("dashboardSection").style.display = "block";
 
